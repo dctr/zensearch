@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euo pipefail
+
+cd "$(dirname -- "$0")/.."
+
+echo "+++ Running Checks +++"
+./auto/check
+echo "+++ Running Tests +++"
+./auto/test
+echo "+++ Building Docker image +++"
+./auto/build
+echo "+++ Running App +++"
+docker run -it "zensearch:latest"

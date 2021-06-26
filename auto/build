@@ -1,0 +1,21 @@
+#!/bin/bash
+set -euo pipefail
+
+cd "$(dirname -- "$0")/.."
+
+# Use real registry when creating artifact.
+# DOCKER_REGISTRY="123456789012.dkr.ecr.ap-southeast-2.amazonaws.com/my-tribe/myapp"
+DOCKER_REGISTRY="zensearch"
+
+# CI_BUILD_NUMBER could be provided by Bamboo in actual build.
+VERSION=${CI_BUILD_NUMBER:-local}
+
+docker build \
+  --file Dockerfile.prod \
+  --tag "$DOCKER_REGISTRY:$VERSION" \
+  .
+
+docker tag "$DOCKER_REGISTRY:$VERSION" "$DOCKER_REGISTRY:latest"
+
+# docker push "$DOCKER_REGISTRY:$VERSION"
+# docker push "$DOCKER_REGISTRY:latest"

@@ -1,0 +1,9 @@
+FROM python:3.9
+
+WORKDIR /work
+COPY ./requirements.prod.txt ./requirements.prod.txt
+RUN pip install --quiet --no-cache-dir --requirement ./requirements.prod.txt
+
+ENV PYTHONPATH /work
+COPY ./zensearch ./zensearch
+CMD python zensearch/main.py

@@ -1,0 +1,8 @@
+FROM python:3.9
+
+WORKDIR /work
+COPY ./requirements.dev.txt ./requirements.dev.txt
+COPY ./requirements.prod.txt ./requirements.prod.txt
+RUN pip install --quiet --no-cache-dir --requirement ./requirements.dev.txt
+
+ENV PYTHONPATH /work
